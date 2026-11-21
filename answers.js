@@ -1,4 +1,4 @@
-{
+const krillionData = {
     "date": "2026-11-21",
     "prompts": [
         {
