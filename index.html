@@ -7,7 +7,7 @@
     <title>Krillion Answers Today — Rare Solutions & Hints</title>
     <meta name="description" content="Stuck on today's Krillion puzzle? Get the rarest answers (One in a Krillion) for all 7 prompts, updated daily.">
     
-    <!-- Adsterra Popunder Script (Kept only one to prevent spamming) -->
+    <!-- Adsterra Popunder Script -->
     <script data-cfasync="false" src="https://afders.org/1/610ffd5691e71c8eb020b458db0c2929"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,8 +93,9 @@
 </div>
 
 <script>
-    // Adding ?v=1 forces the browser to fetch the newest version, not a cached one.
-    const jsonUrl = 'https://krilliondailyanswers.oneapp.dev/answers.json?v=' + new Date().getTime();
+    // Relative link to fetch answers.json right next to this HTML file.
+    // The ?v= trick prevents the browser from caching the old answers.
+    const jsonUrl = 'answers.json?v=' + new Date().getTime();
     
     fetch(jsonUrl)
         .then(response => {
