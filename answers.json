@@ -1,6 +1,4 @@
 {
-    "date": "Loading...",
-    "prompts": [
-        { "prompt": "Name a color", "answer": "Red" }
-    ]
+    "date": "Today's Date",
+    "prompts": []
 }
