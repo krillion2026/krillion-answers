@@ -33,7 +33,6 @@
         .prompt-title { font-size: 14px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 8px; }
         .answer-text { font-size: 22px; font-weight: 800; color: #16a34a; background: #f0fdf4; padding: 12px 16px; border-radius: 8px; display: inline-block; }
         
-        #loading { color: #64748b; font-size: 14px; text-align: center; padding: 20px; }
         footer{text-align:center;padding:30px 16px 60px;font-size:12px;color:#64748b}
     </style>
 </head>
@@ -67,9 +66,8 @@
   <div class="card">
     <span class="date-badge" id="dateBadge">Loading...</span>
     
-    <div id="loading">Fetching today's rarest answers...</div>
-    <div id="answers-container" style="display: none;">
-        <!-- Data from JS will be injected here -->
+    <div id="answers-container">
+        <!-- The answers will be injected here by the script below -->
     </div>
   </div>
 
@@ -88,41 +86,68 @@
 
   <footer>
     <p>Krillion Answers · Fan site · Not affiliated with the game's creators</p>
-    <p style="margin-top:8px">Updates automatically every morning.</p>
+    <p style="margin-top:8px">Updated daily.</p>
   </footer>
 </div>
 
-<!-- Load the data script FIRST -->
-<script src="answers.js?v=1"></script>
-
-<!-- Then display the data -->
 <script>
-    // Wait for the page to load
-    window.onload = function() {
-        // Check if the data variable exists
-        if (typeof krillionData !== 'undefined') {
-            // Hide loading, show container
-            document.getElementById('loading').style.display = 'none';
-            const container = document.getElementById('answers-container');
-            container.style.display = 'block';
-            
-            // Set the date badge
-            document.getElementById('dateBadge').textContent = "Answers for " + krillionData.date;
-            
-            // Loop through the prompts and build HTML
-            let html = '';
-            krillionData.prompts.forEach(item => {
-                html += `<div class="prompt-block">
-                            <div class="prompt-title">${item.prompt}</div>
-                            <div class="answer-text">${item.answer}</div>
-                         </div>`;
-            });
-            
-            container.innerHTML = html;
-        } else {
-            document.getElementById('loading').textContent = "Could not load answers. Please refresh the page.";
-        }
+    // ==========================================
+    // UPDATE THIS DATA EVERY MORNING
+    // ==========================================
+    const krillionData = {
+        "date": "November 21, 2026",
+        "prompts": [
+            {
+                "prompt": "Name the capital city of any country",
+                "answer": "Ngerulmud"
+            },
+            {
+                "prompt": "Name a rom-com movie (1000+ IMDb votes)",
+                "answer": "Romantic Comedy (1983)"
+            },
+            {
+                "prompt": "Name a one-word animal that starts with 'ch' or 'sh'",
+                "answer": "Shingleback"
+            },
+            {
+                "prompt": "Name something used to scoop",
+                "answer": "Locomotive water scoop"
+            },
+            {
+                "prompt": "Name a fish (non-extinct)",
+                "answer": "Red handfish"
+            },
+            {
+                "prompt": "Name a battle royale video game (no browser-only games)",
+                "answer": "Civilization VI"
+            },
+            {
+                "prompt": "Name a sport or game that's played with multiple balls at a time",
+                "answer": "Gnip Gnop"
+            }
+        ]
     };
+
+    // ==========================================
+    // DO NOT TOUCH BELOW THIS LINE
+    // ==========================================
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        // Set the date badge
+        document.getElementById('dateBadge').textContent = "Answers for " + krillionData.date;
+        
+        // Loop through the prompts and build HTML
+        let html = '';
+        krillionData.prompts.forEach(item => {
+            html += `<div class="prompt-block">
+                        <div class="prompt-title">${item.prompt}</div>
+                        <div class="answer-text">${item.answer}</div>
+                     </div>`;
+        });
+        
+        // Inject into the page
+        document.getElementById('answers-container').innerHTML = html;
+    });
 </script>
 
 </body>
