@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0f172a">
+    <title>Krillion Answers Today — Rare Solutions & Hints</title>
+    <meta name="description" content="Stuck on today's Krillion puzzle? Get the rarest answers (One in a Krillion) for all 7 prompts, updated daily.">
+    
+    <!-- Adsterra Popunder Script (Kept only one to prevent spamming) -->
+    <script data-cfasync="false" src="https://afders.org/1/610ffd5691e71c8eb020b458db0c2929"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#f4f6f9;color:#0f172a;line-height:1.5;-webkit-font-smoothing:antialiased}
+        .wrap{max-width:640px;margin:0 auto;padding:0 16px}
+        header{background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);color:#fff;padding:24px 0 32px;text-align:center}
+        header .tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#38bdf8;margin-bottom:8px}
+        header h1{font-size:26px;font-weight:800;letter-spacing:-0.5px;line-height:1.2}
+        header p{font-size:14px;color:#94a3b8;margin-top:6px}
+        .card{background:#fff;border-radius:14px;padding:22px;margin:20px 0;box-shadow:0 4px 20px rgba(15,23,42,0.06);border:1px solid #e2e8f0}
+        .ad-container{text-align:center;margin:20px auto;display:flex;justify-content:center;align-items:center;overflow:hidden}
+        
+        .date-badge{display:inline-block;background:#eff6ff;color:#2563eb;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.5px}
+        
+        .prompt-block { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0; }
+        .prompt-block:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        
+        .prompt-title { font-size: 14px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 8px; }
+        .answer-text { font-size: 22px; font-weight: 800; color: #16a34a; background: #f0fdf4; padding: 12px 16px; border-radius: 8px; display: inline-block; }
+        
+        #loading { color: #64748b; font-size: 14px; text-align: center; padding: 20px; }
+        footer{text-align:center;padding:30px 16px 60px;font-size:12px;color:#64748b}
+    </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="tag">Daily Puzzle Answers</div>
+    <h1>Krillion Answers Today</h1>
+    <p>The rarest solutions for all 7 prompts</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- Ad Slot 1: 320x50 Top Banner -->
+  <div class="ad-container">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '9a440c8f78db048752da7af4f317a8c1',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/9a440c8f78db048752da7af4f317a8c1/invoke.js"></script>
+  </div>
+
+  <!-- MAIN ANSWERS CARD -->
+  <div class="card">
+    <span class="date-badge" id="dateBadge">Loading...</span>
+    
+    <div id="loading">Fetching today's rarest answers...</div>
+    <div id="answers-container" style="display: none;">
+        <!-- Data from JSON will be injected here -->
+    </div>
+  </div>
+
+  <!-- Ad Slot 2: 300x250 Middle Banner -->
+  <div class="ad-container" style="min-height:250px;">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '0a5e4e6e521bee4b26e427de8acbb5e2',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/0a5e4e6e521bee4b26e427de8acbb5e2/invoke.js"></script>
+  </div>
+
+  <footer>
+    <p>Krillion Answers · Fan site · Not affiliated with the game's creators</p>
+    <p style="margin-top:8px">Updates automatically every morning.</p>
+  </footer>
+</div>
+
+<script>
+    // Adding ?v=1 forces the browser to fetch the newest version, not a cached one.
+    const jsonUrl = 'https://krilliondailyanswers.oneapp.dev/answers.json?v=' + new Date().getTime();
+    
+    fetch(jsonUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Hide loading, show container
+            document.getElementById('loading').style.display = 'none';
+            const container = document.getElementById('answers-container');
+            container.style.display = 'block';
+            
+            // Set the date badge
+            document.getElementById('dateBadge').textContent = "Answers for " + data.date;
+            
+            // Loop through the prompts and build HTML
+            let html = '';
+            data.prompts.forEach(item => {
+                html += `<div class="prompt-block">
+                            <div class="prompt-title">${item.prompt}</div>
+                            <div class="answer-text">${item.answer}</div>
+                         </div>`;
+            });
+            
+            // If no prompts are found, show a fallback
+            if (data.prompts.length === 0) {
+                html = '<p style="color:#64748b;font-size:14px;text-align:center;">Check back later for today\'s answers!</p>';
+            }
+            
+            container.innerHTML = html;
+        })
+        .catch(error => {
+            document.getElementById('loading').textContent = "Could not load answers. Please refresh the page.";
+            console.error('Error fetching JSON:', error);
+        });
+</script>
+
+</body>
+</html>
