@@ -69,7 +69,7 @@
     
     <div id="loading">Fetching today's rarest answers...</div>
     <div id="answers-container" style="display: none;">
-        <!-- Data from JSON will be injected here -->
+        <!-- Data from JS will be injected here -->
     </div>
   </div>
 
@@ -92,47 +92,37 @@
   </footer>
 </div>
 
+<!-- Load the data script FIRST -->
+<script src="answers.js?v=1"></script>
+
+<!-- Then display the data -->
 <script>
-    // Relative link to fetch answers.json right next to this HTML file.
-    // The ?v= trick prevents the browser from caching the old answers.
-    const jsonUrl = 'answers.json?v=' + new Date().getTime();
-    
-    fetch(jsonUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
+    // Wait for the page to load
+    window.onload = function() {
+        // Check if the data variable exists
+        if (typeof krillionData !== 'undefined') {
             // Hide loading, show container
             document.getElementById('loading').style.display = 'none';
             const container = document.getElementById('answers-container');
             container.style.display = 'block';
             
             // Set the date badge
-            document.getElementById('dateBadge').textContent = "Answers for " + data.date;
+            document.getElementById('dateBadge').textContent = "Answers for " + krillionData.date;
             
             // Loop through the prompts and build HTML
             let html = '';
-            data.prompts.forEach(item => {
+            krillionData.prompts.forEach(item => {
                 html += `<div class="prompt-block">
                             <div class="prompt-title">${item.prompt}</div>
                             <div class="answer-text">${item.answer}</div>
                          </div>`;
             });
             
-            // If no prompts are found, show a fallback
-            if (data.prompts.length === 0) {
-                html = '<p style="color:#64748b;font-size:14px;text-align:center;">Check back later for today\'s answers!</p>';
-            }
-            
             container.innerHTML = html;
-        })
-        .catch(error => {
+        } else {
             document.getElementById('loading').textContent = "Could not load answers. Please refresh the page.";
-            console.error('Error fetching JSON:', error);
-        });
+        }
+    };
 </script>
 
 </body>
